@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:model_viewer_plus/model_viewer_plus.dart';
+import 'pages/model_list_page.dart';
+import 'pages/model_viewer_page.dart';
 
 void main() => runApp(const MyApp());
 
@@ -10,18 +11,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(title: const Text('Model Viewer')),
-        body: const ModelViewer(
-          backgroundColor: Color.fromARGB(0xFF, 0xEE, 0xEE, 0xEE),
-          src: 'assets/demo.glb',
-          alt: 'A 3D model of an astronaut',
-          ar: true,
-          arModes: ['scene-viewer', 'webxr', 'quick-look'],
-          autoRotate: true,
-          disableZoom: true,
-        ),
-      ),
+      title: '3D Model Viewer',
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const ModelListPage(),
+        '/viewer': (context) => const ModelViewerPage(),
+      },
     );
   }
 }
