@@ -1,3 +1,4 @@
+import 'package:ecommerce_ar/pages/flats.dart';
 import 'package:flutter/material.dart';
 import 'pages/model_list_page.dart';
 import 'pages/model_viewer_page.dart';
@@ -16,6 +17,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const ModelListPage(),
         '/viewer': (context) => const ModelViewerPage(),
+        '/flats': (context) => const Flats(),
       },
     );
   }
