@@ -47,16 +47,41 @@ class ModelListPage extends StatelessWidget {
                           height: 200,
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(16.0), 
-                          child: Text(
-                            model['name']!,
-                            style: const TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black87,
-                            ),
+                          padding: const EdgeInsets.all(16.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align leading and trailing text
+                            children: [
+
+                              Text(
+                                model['name']!,
+                                style: const TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black87,
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    '/viewer',
+                                    arguments: model['src'],
+                                  );
+                                },
+                                child: const Text(
+                                  'Available Flats', // Replace with your trailing text
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.normal,
+                                    color: Colors.black54,
+                                  ),
+                                ),
+
+                              ),
+                            ],
                           ),
                         ),
+
                       ],
                     ),
                   ),
