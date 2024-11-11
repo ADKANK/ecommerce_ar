@@ -25,8 +25,7 @@ class ModelViewerPage extends StatelessWidget {
         padding: const EdgeInsets.only(bottom: 50.0), // Adjust the bottom margin here
         child: FloatingActionButton(
           onPressed: () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('FAB Pressed!')),
+            Navigator.pushNamed(context, '/viewer', arguments: 'assets/interior3d.glb'
             );
           },
           child: const Icon(Icons.add),
