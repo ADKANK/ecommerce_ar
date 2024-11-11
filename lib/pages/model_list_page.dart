@@ -6,9 +6,9 @@ class ModelListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Map<String, String>> models = [
-      {'name': 'Demo', 'image': 'assets/demo.png', 'src': 'assets/demo.glb', 'flat': '1'},
-      {'name': 'House_demo_1', 'image': 'assets/House_model_demo_1.png', 'src': 'assets/House_demo_1.glb', 'flat': '2'},
-      {'name': 'House_demo_2', 'image': 'assets/House_model_demo_2.png', 'src': 'assets/House_demo_2.glb', 'flat': '3'},
+      {'name': 'Demo', 'image': 'assets/demo.png', 'src': 'assets/demo.glb', 'flat': '1', 'inside': 'assets/interior3d.glb'},
+      {'name': 'House_demo_1', 'image': 'assets/House_model_demo_1.png', 'src': 'assets/House_demo_1.glb', 'flat': '2', 'inside': 'assets/interior3d.glb'},
+      {'name': 'House_demo_2', 'image': 'assets/House_model_demo_2.png', 'src': 'assets/House_demo_2.glb', 'flat': '3', 'inside': 'assets/interior3d.glb'},
     ];
 
     return Scaffold(

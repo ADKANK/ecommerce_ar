@@ -12,15 +12,27 @@ class ModelViewerPage extends StatelessWidget {
       appBar: AppBar(title: const Text('Model Viewer')),
       body: modelSrc != null
           ? ModelViewer(
-              backgroundColor: const Color.fromARGB(0xFF, 0xEE, 0xEE, 0xEE),
-              src: modelSrc,
-              alt: 'A 3D model',
-              ar: true,
-              arModes: ['scene-viewer', 'webxr', 'quick-look'],
-              autoRotate: true,
-              disableZoom: true,
-            )
+        backgroundColor: const Color.fromARGB(0xFF, 0xEE, 0xEE, 0xEE),
+        src: modelSrc,
+        alt: 'A 3D model',
+        ar: true,
+        arModes: ['scene-viewer', 'webxr', 'quick-look'],
+        autoRotate: true,
+        disableZoom: true,
+      )
           : const Center(child: Text('Model not found')),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 50.0), // Adjust the bottom margin here
+        child: FloatingActionButton(
+          onPressed: () {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('FAB Pressed!')),
+            );
+          },
+          child: const Icon(Icons.add),
+          tooltip: 'Add something',
+        ),
+      ),
     );
   }
 }
