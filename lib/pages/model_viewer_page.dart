@@ -20,18 +20,8 @@ class ModelViewerPage extends StatelessWidget {
         autoRotate: true,
         disableZoom: true,
       )
-          : const Center(child: Text('Model not found')),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(bottom: 50.0), // Adjust the bottom margin here
-        child: FloatingActionButton(
-          onPressed: () {
-            Navigator.pushNamed(context, '/viewer', arguments: 'assets/interior3d.glb'
-            );
-          },
-          child: const Icon(Icons.add),
-          tooltip: 'Add something',
-        ),
-      ),
+        : const Center(child: Text('Model not found')),
     );
-  }
+
+}
 }

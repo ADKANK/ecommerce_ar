@@ -1,78 +1,108 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Flats extends StatefulWidget {
-  const Flats({Key? key}) : super(key: key);
+  final String realEstateId;
+
+  const Flats({Key? key, required this.realEstateId}) : super(key: key);
 
   @override
   _FlatsState createState() => _FlatsState();
 }
 
 class _FlatsState extends State<Flats> {
+  List flats = [];
+  bool isLoading = true;
+  String errorMessage = '';
+
   @override
+  void initState() {
+    super.initState();
+    fetchFlats();
+  }
 
-  bool isAvailable = true;
-  bool isBooked = false;
+  // Fetch flats data from the API
+  Future<void> fetchFlats() async {
+    try {
+      final response = await http.get(
+        Uri.parse('https://ecommerce-ar-server.vercel.app/api/real-estates/${widget.realEstateId}/flats'),
+      );
+      if (response.statusCode == 200) {
+        setState(() {
+          flats = json.decode(response.body); 
+          isLoading = false;
+          print(flats);
+        });
+      } else {
+        setState(() {
+          errorMessage = 'Failed to load flats. Status code: ${response.statusCode}';
+          isLoading = false;
+        });
+      }
+    } catch (e) {
+      setState(() {
+        errorMessage = 'An error occurred: $e';
+        isLoading = false;
+      });
+    }
+  }
 
+  // Function to book a flat
+  Future<void> bookFlat(String flatId) async {
+  try {
+    final response = await http.patch(
+      Uri.parse('https://ecommerce-ar-server.vercel.app/api/real-estates/${widget.realEstateId}/flats/$flatId/toggle-availability'),
+    );
+    
+    if (response.statusCode == 200) {
+      setState(() {
+        flats.firstWhere((flat) => flat['_id'] == flatId)['status'] = 'booked';
+  
+      });
+    } else {
+      setState(() {
+        errorMessage = 'Failed to book flat. Please try again.';
+      });
+    }
+  } catch (e) {
+    setState(() {
+      errorMessage = 'Error booking the flat: $e';
+    });
+  }
+}
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Available Flats'),
       ),
-      body: ListView(
-        children: [
-          ListTile(
-            title: const Text('Flat 1'),
-            subtitle: const Text('2 BHK'),
-            trailing: isAvailable
-                ? ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        isAvailable = false;
-                        isBooked = true;
-                      });
-                    },
-                    child: const Text('Book'),
-                  )
-                : isBooked
-                    ? const Text('Booked')
-                    : const Text('Sold'),
-          ),
-          ListTile(
-            title: const Text('Flat 2'),
-            subtitle: const Text('3 BHK'),
-            trailing: isAvailable
-                ? ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        isAvailable = false;
-                        isBooked = true;
-                      });
-                    },
-                    child: const Text('Book'),
-                  )
-                : isBooked
-                    ? const Text('Booked')
-                    : const Text('Sold'),
-          ),
-          ListTile(
-            title: const Text('Flat 3'),
-            subtitle: const Text('1 BHK'),
-            trailing: isAvailable
-                ? ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        isAvailable = false;
-                        isBooked = true;
-                      });
-                    },
-                    child: const Text('Book'),
-                  )
-                : isBooked
-                    ? const Text('Booked')
-                    : const Text('Sold'),
-          ),
-        ],
-      ),
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : errorMessage.isNotEmpty
+              ? Center(child: Text(errorMessage))
+              : ListView.builder(
+  itemCount: flats.length,
+  itemBuilder: (context, index) {
+    final flat = flats[index];
+
+    return ListTile(
+      title: Text(flat['flatNumber']), 
+      subtitle: Text(flat['status']),
+      trailing: flat['status'] == 'available'
+          ? ElevatedButton(
+              onPressed: () {
+                bookFlat(flat['_id']);
+              },
+              child: const Text('Book'),
+            )
+          : const Text('Booked'),
+    );
+  },
+              )
     );
   }
 }
+
+
