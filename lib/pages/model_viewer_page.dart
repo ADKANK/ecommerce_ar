@@ -20,8 +20,21 @@ class ModelViewerPage extends StatelessWidget {
         autoRotate: true,
         disableZoom: true,
       )
-        : const Center(child: Text('Model not found')),
+          : const Center(child: Text('Model not found')),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 50.0), // Adjust the bottom margin as needed
+        child: FloatingActionButton(
+          onPressed: () {
+            // Add your FAB action here
+            InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, '/flats', arguments: modelSrc);
+              },
+            );
+          },
+          child: const Icon(Icons.house),
+        ),
+      ),
     );
-
-}
+  }
 }
