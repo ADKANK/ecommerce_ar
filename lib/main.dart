@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       title: '3D Model Viewer',
       initialRoute: '/',
       routes: {
-        '/': (context) => const ModelListPage(),
+        '/': (context) => const MyHomePage(title: 'Test',),
         '/viewer': (context) => const ModelViewerPage(),
         '/flats': (context) => Flats(realEstateId: ModalRoute.of(context)!.settings.arguments as String),
       },
